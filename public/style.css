@@ -1,0 +1,197 @@
+:root {
+  --primary: #3178c6;
+  --secondary: #00d8ff;
+  --success: #28a745;
+  --danger: #dc3545;
+  --dark: #212529;
+  --light: #f8f9fa;
+  --border: #dee2e6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+  background: linear-gradient(135deg, #3178c6 0%, #00d8ff 100%);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+main {
+  padding: 2rem;
+}
+
+footer {
+  background: var(--light);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid var(--border);
+}
+
+footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Welcome message */
+.welcome {
+  background: var(--light);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--primary);
+}
+
+/* Counter component */
+.counter {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.counter h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.counter-display-wrapper {
+  margin: 2rem 0;
+}
+
+.counter-display {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.counter-display.pulse {
+  transform: scale(1.1);
+  color: var(--success);
+}
+
+.counter-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.counter-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 2px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.counter-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(49, 120, 198, 0.3);
+}
+
+.counter-btn:active {
+  transform: translateY(0);
+}
+
+.counter-btn.increment {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.counter-btn.increment:hover {
+  background: var(--success);
+  color: white;
+}
+
+.counter-btn.decrement {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.counter-btn.decrement:hover {
+  background: var(--danger);
+  color: white;
+}
+
+.info {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  .counter-display {
+    font-size: 3rem;
+  }
+
+  .counter-controls {
+    flex-direction: column;
+  }
+
+  .counter-btn {
+    width: 100%;
+  }
+}

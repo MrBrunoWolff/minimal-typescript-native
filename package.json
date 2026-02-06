@@ -1,0 +1,58 @@
+{
+  "name": "minimal-typescript-native",
+  "version": "1.0.0",
+  "description": "Minimal TypeScript Native starter-kit with Bun, tsgo, oxlint, oxfmt, and JSX support",
+  "keywords": [
+    "bun",
+    "jsx",
+    "minimal",
+    "oxfmt",
+    "oxlint",
+    "starter",
+    "template",
+    "tsgo",
+    "tsx",
+    "typescript",
+    "vanilla"
+  ],
+  "license": "MIT",
+  "author": "",
+  "bin": {
+    "create": "bin/create-ts-native-app.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "public",
+    "tests",
+    "server.ts",
+    "happydom.ts",
+    "bunfig.toml",
+    "tsconfig.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot server.ts",
+    "build": "bun build src/index.tsx --outdir=dist --target browser --format=iife --minify && cp public/index.html dist/index.html && cp public/style.css dist/style.css && mv dist/index.js dist/bundle.js",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsgo",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt --write .",
+    "fmt:check": "oxfmt --check .",
+    "check": "tsgo && oxlint && oxfmt --check ."
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^20.5.0",
+    "@types/bun": "1.3.8",
+    "@typescript/native-preview": "^7.0.0-dev.20260206.1",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}
