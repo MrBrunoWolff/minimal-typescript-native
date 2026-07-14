@@ -21,11 +21,7 @@ A minimal, modern TypeScript Native starter template powered by Bun. Zero-build 
 ### Create a new project
 
 ```bash
-# Using Bun (recommended)
 bunx minimal-typescript-native create my-app
-
-# Or using npm
-npx minimal-typescript-native create my-app
 ```
 
 ### Or clone this repository
