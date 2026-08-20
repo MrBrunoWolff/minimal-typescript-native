@@ -1,60 +1,25 @@
 /**
- * Development server with on-the-fly TypeScript/JSX transpilation
+ * Development server.
+ *
+ * `public/index.html` is imported, not served as a file: Bun follows the
+ * `<script>` and `<link>` it references, bundles src/index.tsx (through the
+ * custom JSX runtime in src/jsx-runtime.ts) and style.css on demand, and
+ * hot-reloads them. That replaces the hand-rolled router this used to be — a
+ * /bundle.js branch that called Bun.build() on *every request*, plus separate
+ * branches to hand back the CSS and the HTML with their content types.
+ *
  * Run with: bun --hot server.ts
  */
+import index from "./public/index.html";
 
 const server = Bun.serve({
   port: 3000,
-
-  async fetch(req) {
-    const url = new URL(req.url);
-
-    // Serve bundled JavaScript (transpiled on-the-fly)
-    if (url.pathname === "/bundle.js") {
-      const result = await Bun.build({
-        entrypoints: ["./src/index.tsx"],
-        target: "browser",
-        format: "esm",
-        sourcemap: "inline",
-      });
-
-      if (!result.success) {
-        console.error("Build failed:");
-        for (const log of result.logs) {
-          console.error(log);
-        }
-        return new Response("Build failed", { status: 500 });
-      }
-
-      const [output] = result.outputs;
-      return new Response(output, {
-        headers: {
-          "Content-Type": "application/javascript",
-          "Cache-Control": "no-cache",
-        },
-      });
-    }
-
-    // Serve static CSS
-    if (url.pathname === "/style.css") {
-      const file = Bun.file("./public/style.css");
-      return new Response(file, {
-        headers: {
-          "Content-Type": "text/css",
-        },
-      });
-    }
-
-    // Serve index.html for root and unknown paths
-    const file = Bun.file("./public/index.html");
-    return new Response(file, {
-      headers: {
-        "Content-Type": "text/html",
-      },
-    });
+  routes: {
+    "/*": index,
   },
+  development: true,
 });
 
-console.log(`🚀 Server running at http://localhost:${server.port}`);
+console.log(`🚀 Server running at ${server.url}`);
 console.log(`   Press Ctrl+C to stop`);
-console.log(`   Files are watched - changes will auto-reload!`);
+console.log(`   Files are watched — changes will auto-reload!`);

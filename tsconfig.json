@@ -13,6 +13,11 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    // The `typecheck` script runs tsgo, which without this EMITS .js next to
+    // every source file. Bun then discovered tests/**/*.test.js alongside the
+    // .ts specs and ran the whole suite twice — against stale compiled output.
+    // Bun runs the TypeScript directly, so nothing here should ever emit.
+    "noEmit": true,
     "types": ["bun-types"]
   },
   "include": ["src/**/*", "tests/**/*", "server.ts", "happydom.ts"]
