@@ -1,5 +1,5 @@
 {
-  "name": "minimal-typescript-native",
+  "name": "@mrbrunowolff/minimal-typescript-native",
   "version": "1.0.0",
   "description": "Minimal TypeScript Native starter-kit with Bun, tsgo, oxlint, oxfmt, and JSX support",
   "keywords": [
@@ -37,6 +37,9 @@
     "LICENSE"
   ],
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "bun --hot server.ts",
     "build": "bun build ./public/index.html --outdir=dist --minify",

@@ -12,11 +12,11 @@ const projectName = args[0];
 
 if (!projectName) {
   console.log("");
-  console.log("Usage: bunx minimal-typescript-native create <project-name>");
-  console.log("   or: npx minimal-typescript-native create <project-name>");
+  console.log("Usage: bunx @mrbrunowolff/minimal-typescript-native create <project-name>");
+  console.log("   or: npx @mrbrunowolff/minimal-typescript-native create <project-name>");
   console.log("");
   console.log("Example:");
-  console.log("  bunx minimal-typescript-native create my-app");
+  console.log("  bunx @mrbrunowolff/minimal-typescript-native create my-app");
   console.log("");
   process.exit(1);
 }
