@@ -17,6 +17,10 @@
   ],
   "license": "MIT",
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrBrunoWolff/minimal-typescript-native.git"
+  },
   "bin": {
     "create": "bin/create-ts-native-app.js"
   },
