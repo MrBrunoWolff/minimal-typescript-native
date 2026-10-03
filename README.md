@@ -1,267 +1,107 @@
-# ⚡ Minimal TypeScript Native + Bun
+# Minimal TypeScript Native
 
-A minimal, modern TypeScript Native starter template powered by Bun. Zero-build development with TypeScript, JSX, tsgo, and Oxc tooling.
+A minimal vanilla TypeScript + JSX starter on Bun, type-checked with TypeScript Native (tsgo) and linted/formatted with Oxc.
 
-## ✨ Features
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-- **TypeScript Native (tsgo)** - 10x faster type checking with Microsoft's Go-based compiler
-- **Bun Runtime** - Fast JavaScript runtime and bundler
-- **Custom JSX Runtime** - Vanilla TypeScript JSX that creates real DOM elements
-- **Zero Runtime Dependencies** - Pure vanilla TypeScript, no frameworks
-- **Zero-Build Dev** - On-the-fly transpilation during development
-- **Hot Reload** - Automatic server reload with `bun --hot`
-- **Oxlint** - Lightning-fast linting (zero-config, ESLint compatible)
-- **Oxfmt** - Ultra-fast formatting (Prettier compatible)
-- **DOM Testing** - Built-in testing with happy-dom
-- **ES Modules** - Modern JavaScript module system
-- **Production Build** - Optimized bundling for deployment
+## Features
 
-## 🚀 Quick Start
+- Bun dev server (`Bun.serve` with an HTML import) that bundles `src/index.tsx` on demand and hot-reloads via `bun --hot`
+- Custom JSX runtime (`h`, `Fragment`) that creates real DOM elements; no runtime dependencies
+- Type checking with tsgo (`@typescript/native-preview`), configured with `noEmit`
+- Linting with oxlint and formatting with oxfmt
+- Tests with `bun test` and happy-dom, preloaded through `bunfig.toml`
+- Production build with `bun build` from `public/index.html`, emitting content-hashed assets to `dist/`
+- GitHub Actions CI: check, test, build and `bun audit`, then npm publish via trusted publishing
+- Install hardening: `minimumReleaseAge` in `bunfig.toml` refuses packages published less than 3 days ago
 
-### Create a new project
+## Quick start
 
-```bash
-bunx @mrbrunowolff/minimal-typescript-native create my-app
-```
+### Clone
 
-### Or clone this repository
-
-```bash
-git clone https://github.com/yourusername/minimal-typescript-native.git my-app
-cd my-app
+```sh
+git clone https://github.com/MrBrunoWolff/minimal-typescript-native.git
+cd minimal-typescript-native
 bun install
-```
-
-## 📦 Usage
-
-### Development
-
-Start the development server with hot reload:
-
-```bash
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+The dev server runs at http://localhost:3000.
 
-The server watches for file changes and automatically reloads. Just refresh your browser to see updates!
+## Scripts
 
-### Type Checking
+| Command              | Description                                                |
+| -------------------- | ---------------------------------------------------------- |
+| `bun run dev`        | Start the dev server (`server.ts`) with hot reload         |
+| `bun run build`      | Bundle `public/index.html` into `dist/`, minified          |
+| `bun run test`       | Run the test suite in parallel                             |
+| `bun run test:watch` | Run tests in watch mode                                    |
+| `bun run typecheck`  | Type check with tsgo                                       |
+| `bun run lint`       | Lint with oxlint                                           |
+| `bun run lint:fix`   | Lint and auto-fix with oxlint                              |
+| `bun run fmt`        | Format all files with oxfmt                                |
+| `bun run fmt:check`  | Check formatting with oxfmt                                |
+| `bun run check`      | Run `typecheck`, `lint` and `fmt:check` in parallel        |
+| `bun run audit`      | Audit dependencies, failing on high or critical advisories |
 
-Run type checking with tsgo (TypeScript 7 native):
-
-```bash
-bun run typecheck
-```
-
-### Linting
-
-Lint your code with oxlint:
-
-```bash
-# Check for issues
-bun run lint
-
-# Auto-fix issues
-bun run lint:fix
-```
-
-### Formatting
-
-Format your code with oxfmt:
-
-```bash
-# Format files
-bun run fmt
-
-# Check formatting
-bun run fmt:check
-```
-
-### Testing
-
-Run tests with happy-dom:
-
-```bash
-# Run all tests
-bun test
-
-# Watch mode
-bun test --watch
-```
-
-### Production Build
-
-Create an optimized bundle:
-
-```bash
-bun run build
-```
-
-This generates a minified bundle in the `dist/` directory.
-
-`public/index.html` is the entry point for both dev and build: Bun follows the
-`<script>` and `<link>` it references, so the same file drives the dev server and
-the production bundle. The build emits content-hashed assets with the references
-rewritten, rather than copying files and renaming a bundle to match a hardcoded
-`<script src>`.
-
-### Run All Checks
-
-Run type checking, linting, and format checking together:
-
-```bash
-bun run check
-```
-
-## 📁 Project Structure
+## Project structure
 
 ```
 minimal-typescript-native/
-├── src/
-│   ├── jsx-runtime.ts         # Custom JSX factory (h, Fragment)
-│   ├── index.tsx              # Main entry point
-│   ├── components/
-│   │   └── Counter.tsx        # Example JSX component
-│   └── utils/
-│       └── helpers.ts         # Utility functions
+├── .github/workflows/ci.yml     # Quality checks + npm publish
+├── bin/
+│   └── create-ts-native-app.js  # Project scaffolder (package bin)
 ├── public/
-│   ├── index.html             # Entry point: <script src> drives both dev and build
-│   └── style.css              # Global styles
+│   ├── index.html               # Entry point for both dev and build
+│   └── style.css                # Global styles
+├── src/
+│   ├── index.tsx                # App entry
+│   ├── jsx-runtime.ts           # Custom JSX factory (h, Fragment)
+│   ├── jsx.d.ts                 # JSX type declarations
+│   ├── components/
+│   │   └── Counter.tsx          # Example component
+│   └── utils/
+│       └── helpers.ts           # formatDate, createElement, debounce
 ├── tests/
 │   ├── components/
-│   │   └── Counter.test.ts    # Component tests
+│   │   └── Counter.test.ts
 │   └── utils/
-│       └── helpers.test.ts    # Utility tests
-├── server.ts                  # Dev server: imports index.html, Bun bundles + hot-reloads
-├── happydom.ts                # DOM testing setup
-├── bunfig.toml                # Bun configuration
-└── package.json
+│       └── helpers.test.ts
+├── server.ts                    # Dev server
+├── happydom.ts                  # happy-dom test preload
+├── bunfig.toml                  # Bun install, test and JSX config
+├── tsconfig.json
+├── package.json
+└── LICENSE
 ```
 
-## 🎯 Philosophy
+## JSX runtime
 
-This starter embraces a **minimal, vanilla approach** to TypeScript development:
+`tsconfig.json` sets `"jsx": "react"` with `jsxFactory: "h"` and `jsxFragmentFactory: "Fragment"`, so any `.tsx` file that imports `h` from `src/jsx-runtime.ts` gets real DOM nodes from JSX. `className`, `on*` event handlers, `style` objects and `ref` callbacks are handled; other props become attributes.
 
-- **No runtime dependencies** - Pure vanilla TypeScript, no frameworks
-- **Custom JSX runtime** - Real DOM elements from JSX syntax
-- **No build step in development** - Bun transpiles TypeScript on-the-fly
-- **Component functions** - Clean component structure returning HTMLElement
-- **Vanilla DOM APIs** - Direct DOM manipulation and events
-- **Modern tooling** - tsgo for type checking, Oxc for linting/formatting
-- **ES modules** - Modern import/export syntax
-- **Production-ready** - Optimized builds when you need them
+```tsx
+import { h } from "../jsx-runtime";
 
-## 💡 Examples
-
-### Custom JSX Runtime
-
-```typescript
-import { h } from './jsx-runtime';
-
-// JSX creates real DOM elements
-const element = (
-  <div className="container">
-    <h1>Hello TypeScript Native!</h1>
-    <button onClick={() => console.log('Clicked!')}>
-      Click me
-    </button>
-  </div>
-) as HTMLElement;
-
-document.body.appendChild(element);
-```
-
-### Component Functions
-
-```typescript
-import { h } from '../jsx-runtime';
-
-interface CounterProps {
-  initialCount: number;
-}
-
-export function Counter({ initialCount }: CounterProps): HTMLElement {
-  let count = initialCount;
-
-  const display = <div className="display">{count}</div> as HTMLDivElement;
-
+export function Greeting({ name }: { name: string }): HTMLElement {
   return (
-    <div className="counter">
-      {display}
-      <button onClick={() => {
-        count++;
-        display.textContent = String(count);
-      }}>
-        Increment
-      </button>
+    <div className="greeting">
+      <p>Hello, {name}</p>
+      <button onClick={() => console.log("clicked")}>Click me</button>
     </div>
   ) as HTMLElement;
 }
-
-// Use the component
-const counter = Counter({ initialCount: 0 });
-document.getElementById('app')!.appendChild(counter);
 ```
 
-### Testing with happy-dom
+Components are plain functions returning `HTMLElement`; see `src/components/Counter.tsx` for state handled with direct DOM updates.
 
-```typescript
-/// <reference lib="dom" />
+## Dev server and build
 
-import { test, expect } from "bun:test";
-import { Counter } from "../src/components/Counter";
+`public/index.html` is the single entry point. `server.ts` imports it and serves it on every route, so Bun follows its `<script>` and `<link>` tags, bundles `src/index.tsx` and `style.css` on demand, and hot-reloads them. `bun run build` passes the same file to `bun build`, which emits content-hashed assets to `dist/` with the references rewritten.
 
-test("Counter increments on button click", () => {
-  const counter = Counter({ initialCount: 0 });
-  document.body.appendChild(counter);
+## Publishing
 
-  const button = document.querySelector("button") as HTMLButtonElement;
-  const display = document.querySelector(".display") as HTMLElement;
+On a push to `main` (or a manual `gh workflow run ci.yml`), CI runs the quality job and then publishes `@mrbrunowolff/minimal-typescript-native` to npm through trusted publishing (OIDC, no token) when the `package.json` version is not yet on the registry. Trusted publishing cannot do a package's first publish: until the package has been published once manually and the trusted publisher is configured (repository `MrBrunoWolff/minimal-typescript-native`, workflow `ci.yml`), the publish step is skipped.
 
-  button.click();
-  expect(display.textContent).toBe("1");
-});
-```
+## License
 
-## 🛠️ Tech Stack
-
-- [TypeScript Native (tsgo)](https://github.com/microsoft/typescript-go) - 10x faster type checking
-- [Oxc (oxlint + oxfmt)](https://oxc.rs/) - Lightning-fast linting and formatting
-- [Bun](https://bun.sh/) - Fast all-in-one JavaScript runtime
-- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
-- [happy-dom](https://github.com/capricorn86/happy-dom) - Fast DOM implementation for testing
-
-## 📖 Scripts
-
-| Command             | Description                              |
-| ------------------- | ---------------------------------------- |
-| `bun run dev`       | Start development server with hot reload |
-| `bun run build`     | Create production bundle                 |
-| `bun test`          | Run tests                                |
-| `bun test --watch`  | Run tests in watch mode                  |
-| `bun run typecheck` | Type check with tsgo                     |
-| `bun run lint`      | Lint with oxlint                         |
-| `bun run lint:fix`  | Auto-fix lint issues                     |
-| `bun run fmt`       | Format with oxfmt                        |
-| `bun run fmt:check` | Check formatting                         |
-| `bun run check`     | Run all checks (typecheck + lint + fmt)  |
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit issues and pull requests.
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details
-
-## 🔗 Links
-
-- [TypeScript Native (tsgo)](https://github.com/microsoft/typescript-go)
-- [Oxc Documentation](https://oxc.rs/)
-- [Bun Documentation](https://bun.sh/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-
----
-
-**Happy coding with TypeScript Native! 🎉**
+MIT — see [LICENSE](LICENSE).
