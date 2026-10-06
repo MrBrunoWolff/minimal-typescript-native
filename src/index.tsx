@@ -6,7 +6,7 @@ import { formatDate } from "./utils/helpers";
  * Initialize the app when DOM is ready
  */
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🚀 TypeScript Native + Bun + tsgo + Oxc");
+  console.log("🚀 TypeScript 7 + Bun + tsc + Oxc");
 
   const app = document.getElementById("app");
   if (!app) {

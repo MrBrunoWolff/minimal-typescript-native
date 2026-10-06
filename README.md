@@ -1,6 +1,6 @@
 # Minimal TypeScript Native
 
-A minimal vanilla TypeScript + JSX starter on Bun, type-checked with TypeScript Native (tsgo) and linted/formatted with Oxc.
+A minimal vanilla TypeScript + JSX starter on Bun, type-checked with TypeScript 7’s native compiler (`tsc`) and linted/formatted with Oxc.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
@@ -8,7 +8,7 @@ A minimal vanilla TypeScript + JSX starter on Bun, type-checked with TypeScript 
 
 - Bun dev server (`Bun.serve` with an HTML import) that bundles `src/index.tsx` on demand and hot-reloads via `bun --hot`
 - Custom JSX runtime (`h`, `Fragment`) that creates real DOM elements; no runtime dependencies
-- Type checking with tsgo (`@typescript/native-preview`), configured with `noEmit`
+- Type checking with stable TypeScript 7 (`typescript` and `tsc`), configured with `noEmit`
 - Linting with oxlint and formatting with oxfmt
 - Tests with `bun test` and happy-dom, preloaded through `bunfig.toml`
 - Production build with `bun build` from `public/index.html`, emitting content-hashed assets to `dist/`
@@ -36,7 +36,7 @@ The dev server runs at http://localhost:3000.
 | `bun run build`      | Bundle `public/index.html` into `dist/`, minified          |
 | `bun run test`       | Run the test suite in parallel                             |
 | `bun run test:watch` | Run tests in watch mode                                    |
-| `bun run typecheck`  | Type check with tsgo                                       |
+| `bun run typecheck`  | Type check with tsc                                        |
 | `bun run lint`       | Lint with oxlint                                           |
 | `bun run lint:fix`   | Lint and auto-fix with oxlint                              |
 | `bun run fmt`        | Format all files with oxfmt                                |

@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # typecheck (tsgo) + lint + format, in parallel.
+      # typecheck (tsc) + lint + format, in parallel.
       - name: Check
         run: bun run check
 

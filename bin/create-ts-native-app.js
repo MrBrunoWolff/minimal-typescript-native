@@ -115,7 +115,7 @@ dist/
   console.log(`  cd ${projectName}`);
   console.log("  bun run dev        # Start development server");
   console.log("  bun test           # Run tests");
-  console.log("  bun run typecheck  # Type check with tsgo");
+  console.log("  bun run typecheck  # Type check with tsc");
   console.log("  bun run lint       # Lint with oxlint");
   console.log("  bun run fmt        # Format with oxfmt");
   console.log("  bun run build      # Build for production");
