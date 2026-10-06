@@ -46,12 +46,15 @@
     "test": "bun test --parallel",
     "test:watch": "bun test --watch",
     "typecheck": "tsc",
-    "lint": "oxlint",
+    "lint": "oxlint --deny-warnings",
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
     "check": "bun run --parallel --no-exit-on-error typecheck lint fmt:check",
-    "audit": "bun audit --audit-level=high"
+    "audit": "bun audit --audit-level=high",
+    "check:ci": "node scripts/quality.mjs",
+    "check:code": "node scripts/quality.mjs code",
+    "check:security": "node scripts/quality.mjs security"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "latest",
@@ -63,5 +66,5 @@
   "engines": {
     "bun": ">=1.0.0"
   },
-  "packageManager": "bun@1.4.0"
+  "packageManager": "bun@1.4.2"
 }
